@@ -2,181 +2,476 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote API Matrix - Premium Brutalism</title>
-
-    <!-- Google Fonts: Space Grotesk -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>QUOTE MATRIX | Neo-Brutalist</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS for utility classes -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Space Grotesk"', 'sans-serif'],
-                    },
-                    colors: {
-                        brutalCream: '#FDFBF7',
-                        brutalYellow: '#FFD800',
-                        brutalPink: '#FF499E',
-                        brutalBlue: '#387BFF',
-                        brutalLime: '#B6FF00',
-                        brutalWhite: '#FFFFFF',
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Base styling and retro dot-grid background */
+        :root {
+            /* Neo-Brutalist Color Palette */
+            --bg-color: #f4f4f0;
+            --text-main: #000000;
+            --border-main: #000000;
+            --accent-yellow: #FFD800;
+            --accent-blue: #387BFF;
+            --accent-pink: #FF499E;
+            --accent-green: #00FF55;
+            --accent-white: #FFFFFF;
+            
+            /* Structural Measurements */
+            --border-width: 4px;
+            --shadow-depth: 6px;
+            --shadow-depth-sm: 4px;
+            
+            /* Typography */
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background-color: theme('colors.brutalCream');
-            background-image: radial-gradient(#111 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
-            color: #000;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-display);
+            background-image: radial-gradient(var(--border-main) 2px, transparent 2px);
+            background-size: 30px 30px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .brutal-box {
+            background-color: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: var(--shadow-depth) var(--shadow-depth) 0px 0px var(--border-main);
+            padding: 2rem;
+        }
+
+        .brutal-btn {
+            background-color: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: var(--shadow-depth-sm) var(--shadow-depth-sm) 0px 0px var(--border-main);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .brutal-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--shadow-depth-sm) + 2px) calc(var(--shadow-depth-sm) + 2px) 0px 0px var(--border-main);
+        }
+
+        .brutal-btn:active {
+            transform: translate(var(--shadow-depth-sm), var(--shadow-depth-sm));
+            box-shadow: 0px 0px 0px 0px var(--border-main);
+        }
+
+        .brutal-btn.yellow { background-color: var(--accent-yellow); }
+        .brutal-btn.blue { background-color: var(--accent-blue); color: #fff; }
+        .brutal-btn.pink { background-color: var(--accent-pink); color: #fff; }
+        .brutal-btn.green { background-color: var(--accent-green); }
+
+        header {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: var(--border-width) solid var(--border-main);
+            background: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: var(--accent-yellow);
+            display: inline-block;
+            padding: 0 0.5rem;
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: 4px 4px 0px 0px var(--border-main);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 2rem;
+        }
+
+        .controls-wrapper {
+            flex: 1;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .step-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .step-label {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-num {
+            background: var(--border-main);
+            color: var(--accent-white);
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
-            margin: 0;
-            overflow-x: hidden;
+            font-weight: 800;
         }
 
-        /* Core Neo-Brutalist Utilities */
-        .brutal-border {
-            border: 4px solid #000000;
-        }
-
-        .brutal-shadow {
-            box-shadow: 8px 8px 0px 0px #000000;
-        }
-
-        /* Mechanical Click Animation for Buttons */
-        .brutal-btn-interactive {
-            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .brutal-btn-interactive:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 10px 10px 0px 0px #000000;
-        }
-
-        .brutal-btn-interactive:active {
-            transform: translate(8px, 8px);
-            box-shadow: 0px 0px 0px 0px #000000;
-        }
-
-        /* Custom Dropdown Styling */
         select {
+            width: 100%;
+            padding: 1rem;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            background-color: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: var(--shadow-depth-sm) var(--shadow-depth-sm) 0px 0px var(--border-main);
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+            cursor: pointer;
+            outline: none;
+            /* Custom brutalist arrow */
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem top 50%;
-            background-size: 1.2rem auto;
-            cursor: pointer;
-        }
-
-        select:focus {
-            outline: 4px solid #000;
-            outline-offset: 2px;
-        }
-
-        /* Entrance Animations */
-        @keyframes popIn {
-            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .animate-entrance {
-            opacity: 0;
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            background-size: 1.5rem auto;
+            transition: all 0.1s ease;
         }
         
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
+        select:focus {
+            background-color: var(--accent-yellow);
+        }
 
-        /* Loader Animation */
-        .loader-wrapper {
-            display: none; /* Hidden by default */
-            justify-content: center;
+        .main-action {
+            margin-top: 1rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+            width: 100%;
+        }
+
+        .display-wrapper {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-width: 0; /* Prevents overflow in flex */
+        }
+
+        .quote-container {
+            background-color: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: var(--shadow-depth) var(--shadow-depth) 0px 0px var(--border-main);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .quote-header {
+            border-bottom: var(--border-width) solid var(--border-main);
+            padding: 1rem 1.5rem;
+            background: var(--accent-pink);
+            color: #fff;
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            min-height: 160px;
+        }
+        
+        .quote-header-title {
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .quote-content {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-weight: 700;
+            text-align: left;
+            position: relative;
+        }
+
+        .quote-content::before {
+            content: '"';
+            font-family: var(--font-display);
+            font-size: 6rem;
+            position: absolute;
+            top: 0rem;
+            left: 1rem;
+            color: var(--border-main);
+            opacity: 0.15;
+            line-height: 1;
+        }
+
+        .placeholder-text {
+            color: #888;
+            font-style: italic;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .action-bar {
+            border-top: var(--border-width) solid var(--border-main);
+            padding: 1rem;
+            background: var(--bg-color);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .loader-wrapper {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
         }
 
         .brutal-loader {
-            width: 48px;
-            height: 48px;
-            background-color: theme('colors.brutalYellow');
-            border: 4px solid #000;
-            animation: flip 1.2s infinite ease-in-out;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-blue);
+            border: var(--border-width) solid var(--border-main);
+            animation: brutalSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
         }
 
-        @keyframes flip {
-            0% { transform: perspective(120px) rotateX(0deg) rotateY(0deg); background-color: theme('colors.brutalYellow'); }
-            25% { transform: perspective(120px) rotateX(-180deg) rotateY(0deg); background-color: theme('colors.brutalPink'); }
-            50% { transform: perspective(120px) rotateX(-180deg) rotateY(0deg); background-color: theme('colors.brutalPink'); }
-            75% { transform: perspective(120px) rotateX(-180deg) rotateY(-180deg); background-color: theme('colors.brutalBlue'); }
-            100% { transform: perspective(120px) rotateX(-180deg) rotateY(-180deg); background-color: theme('colors.brutalBlue'); }
+        @keyframes brutalSpin {
+            0% { transform: perspective(200px) rotateY(0); background-color: var(--accent-blue); }
+            50% { transform: perspective(200px) rotateY(180deg); background-color: var(--accent-pink); }
+            100% { transform: perspective(200px) rotateY(360deg); background-color: var(--accent-yellow); }
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .toast {
+            background-color: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            box-shadow: 4px 4px 0px 0px var(--border-main);
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            max-width: 350px;
+        }
+        
+        .toast.success { border-left: 10px solid var(--accent-green); }
+        .toast.error { border-left: 10px solid var(--accent-pink); }
+        .toast.info { border-left: 10px solid var(--accent-blue); }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); }
+            to { transform: translateX(120%); }
+        }
+
+        .favorites-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 40;
+            display: none;
+        }
+
+        .favorites-panel {
+            position: fixed;
+            top: 0; right: -100%; width: 100%; max-width: 450px; height: 100vh;
+            background: var(--bg-color);
+            border-left: var(--border-width) solid var(--border-main);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0px 0px 0px rgba(0,0,0,0.1);
+        }
+
+        .favorites-panel.open {
+            right: 0;
+        }
+
+        .fav-header {
+            padding: 1.5rem;
+            border-bottom: var(--border-width) solid var(--border-main);
+            background: var(--accent-yellow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .fav-list {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .fav-card {
+            background: var(--accent-white);
+            border: var(--border-width) solid var(--border-main);
+            padding: 1rem;
+            box-shadow: 4px 4px 0px 0px var(--border-main);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .fav-delete {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent-pink);
+            color: #fff;
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px 0px var(--border-main);
+        }
+
+        .fav-delete:hover { transform: scale(1.1); }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            main { flex-direction: column; padding: 2rem 1rem; }
+            .controls-wrapper, .display-wrapper { max-width: 100%; width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .logo { font-size: 1.5rem; }
+            .action-bar { flex-direction: column; }
+            .brutal-btn { width: 100%; }
+            .quote-content { font-size: 1.2rem; padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <main class="w-full max-w-4xl mx-auto">
-        
-        <!-- Header Section -->
-        <header class="mb-10 text-center animate-entrance">
-            <div class="inline-block bg-brutalWhite brutal-border brutal-shadow px-8 py-4 mb-4 transform -rotate-2">
-                <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tight text-black">
-                    Wisdom Matrix
-                </h1>
-            </div>
-            <p class="text-xl md:text-2xl font-bold bg-brutalLime inline-block px-4 py-1 brutal-border shadow-[4px_4px_0px_0px_#000] transform rotate-1 mt-2">
-                Extract the truth.
-            </p>
-        </header>
+    <header>
+        <div class="logo">MATRIX.API</div>
+        <button class="brutal-btn" onclick="toggleFavorites()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            SAVED
+        </button>
+    </header>
 
-        <div class="bg-brutalWhite brutal-border brutal-shadow p-6 md:p-10 animate-entrance delay-1 mb-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <main>
+        <!-- Control Panel -->
+        <div class="controls-wrapper">
+            <div class="brutal-box" style="display: flex; flex-direction: column; gap: 2rem;">
                 
-                <!-- Category Select -->
-                <div class="flex flex-col gap-2 relative group">
-                    <label for="category" class="font-bold text-sm uppercase tracking-wider ml-1">Category</label>
-                    <select id="category" class="w-full bg-brutalPink text-white brutal-border p-4 text-lg font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-shadow">
-                        <option value="Courage Grit  Silence">Courage Grit Silence</option>
+                <div class="step-group">
+                    <label class="step-label">
+                        <span class="step-num">1</span> SELECT THEME
+                    </label>
+                    <select id="category">
+                        <option value="random">🎲 SURPRISE ME (RANDOM)</option>
+                        <option value="Courage Grit  Silence">Courage, Grit & Silence</option>
                         <option value="Deep Life Wisdom">Deep Life Wisdom</option>
-                        <option value="Focus Purpose  Mastery">Focus Purpose Mastery</option>
-                        <option value="Happiness Joy  Freedom">Happiness Joy Freedom</option>
-                        <option value="Human Psychology  Wit">Human Psychology Wit</option>
-                        <option value="Inner Peace  Stoicism">Inner Peace Stoicism</option>
-                        <option value="Love Relationships  Empathy">Love Relationships Empathy</option>
-                        <option value="Mindset Success  Motivation">Mindset Success Motivation</option>
-                        <option value="Time Aging  Destiny">Time Aging Destiny</option>
+                        <option value="Focus Purpose  Mastery">Focus, Purpose & Mastery</option>
+                        <option value="Happiness Joy  Freedom">Happiness, Joy & Freedom</option>
+                        <option value="Human Psychology  Wit">Human Psychology & Wit</option>
+                        <option value="Inner Peace  Stoicism">Inner Peace & Stoicism</option>
+                        <option value="Love Relationships  Empathy">Love, Relationships & Empathy</option>
+                        <option value="Mindset Success  Motivation">Mindset, Success & Motivation</option>
+                        <option value="Time Aging  Destiny">Time, Aging & Destiny</option>
                     </select>
                 </div>
 
-                <!-- Language Select -->
-                <div class="flex flex-col gap-2">
-                    <label for="language" class="font-bold text-sm uppercase tracking-wider ml-1">Language</label>
-                    <select id="language" class="w-full bg-brutalBlue text-white brutal-border p-4 text-lg font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-shadow">
+                <div class="step-group">
+                    <label class="step-label">
+                        <span class="step-num">2</span> SELECT LANGUAGE
+                    </label>
+                    <select id="language">
+                        <option value="random">🎲 SURPRISE ME (RANDOM)</option>
                         <option value="english">English</option>
                         <option value="hinglish">Hinglish</option>
                     </select>
                 </div>
 
-                <!-- Part Select -->
-                <div class="flex flex-col gap-2">
-                    <label for="part" class="font-bold text-sm uppercase tracking-wider ml-1">Volume</label>
-                    <select id="part" class="w-full bg-brutalLime text-black brutal-border p-4 text-lg font-bold shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-shadow">
+                <div class="step-group">
+                    <label class="step-label">
+                        <span class="step-num">3</span> SELECT SEGMENT
+                    </label>
+                    <select id="part">
+                        <option value="random">🎲 SURPRISE ME (RANDOM)</option>
                         <option value="1">Part 1</option>
                         <option value="2">Part 2</option>
                         <option value="3">Part 3</option>
@@ -186,87 +481,398 @@
                         <option value="7">Part 7</option>
                     </select>
                 </div>
+
+                <button class="brutal-btn yellow main-action" onclick="fetchQuote()">
+                    FETCH WISDOM ⚡
+                </button>
             </div>
         </div>
 
-        <div class="flex justify-center mb-10 animate-entrance delay-2 z-10 relative">
-            <button onclick="fetchQuote()" class="bg-brutalYellow text-black brutal-border brutal-shadow brutal-btn-interactive text-2xl md:text-3xl font-black uppercase px-12 py-5 w-full md:w-auto tracking-wide">
-                Get Quote
-            </button>
-        </div>
+        <div class="display-wrapper">
+            <div class="quote-container">
+                <div class="quote-header">
+                    <span class="quote-header-title" id="tagDisplay">Awaiting Input...</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.9rem;" id="sourceDisplay"></span>
+                </div>
+                
+                <div class="quote-content" id="quoteText">
+                    <span class="placeholder-text">Configure steps 1-3 and hit Fetch Wisdom to pull data from the Matrix.</span>
+                </div>
 
-        <!-- Quote Display Box -->
-        <div id="quoteWrapper" class="bg-brutalWhite brutal-border brutal-shadow p-8 md:p-14 relative animate-entrance delay-3 min-h-[200px] flex items-center justify-center">
-            
-            <!-- Decorative Accent -->
-            <div class="absolute -top-4 -left-4 w-8 h-8 bg-black"></div>
-            <div class="absolute -bottom-4 -right-4 w-8 h-8 bg-black"></div>
+                <div class="loader-wrapper" id="loader">
+                    <div class="brutal-loader"></div>
+                </div>
 
-            <div id="quoteDisplay" class="relative z-10 w-full text-center">
-                <p id="quoteText" class="font-semibold text-2xl md:text-4xl text-black leading-relaxed">
-                    Select a category, language, and volume to pull data directly from the matrix.
-                </p>
+                <div class="action-bar">
+                    <button class="brutal-btn" onclick="copyQuote()" id="btnCopy" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><rect x="9" y="9" width="13" height="13"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        COPY
+                    </button>
+                    <button class="brutal-btn green" onclick="saveFavorite()" id="btnFav" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        SAVE
+                    </button>
+                    <button class="brutal-btn blue" onclick="generateInstagramPost()" id="btnInsta" disabled style="margin-left: auto;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        IG EXPORT
+                    </button>
+                </div>
             </div>
-
-            <!-- Loader element (hidden initially) -->
-            <div id="loader" class="loader-wrapper absolute inset-0 bg-brutalWhite z-20">
-                <div class="brutal-loader shadow-[6px_6px_0px_0px_#000]"></div>
-            </div>
         </div>
-
     </main>
 
+    <div class="favorites-overlay" id="favOverlay" onclick="toggleFavorites()"></div>
+    <div class="favorites-panel" id="favPanel">
+        <div class="fav-header">
+            <span>SAVED QUOTES</span>
+            <button class="brutal-btn" style="padding: 0.2rem 0.5rem;" onclick="toggleFavorites()">X</button>
+        </div>
+        <div class="fav-list" id="favList">
+            <!-- Saved items populated here -->
+        </div>
+    </div>
+
+    <!-- Hidden canvas for image generation -->
+    <canvas id="igCanvas" width="1080" height="1080" style="display: none;"></canvas>
+    
+    <!-- Toast notifications container -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
+        // Data Structures for Randomization
+        const CATEGORIES = [
+            "Courage Grit  Silence", "Deep Life Wisdom", "Focus Purpose  Mastery",
+            "Happiness Joy  Freedom", "Human Psychology  Wit", "Inner Peace  Stoicism",
+            "Love Relationships  Empathy", "Mindset Success  Motivation", "Time Aging  Destiny"
+        ];
+        const LANGUAGES = ["english", "hinglish"];
+        const PARTS = ["1", "2", "3", "4", "5", "6", "7"];
+
+        // State
+        let currentQuote = "";
+        let currentCategory = "";
+
+        // DOM Elements
+        const elQuoteText = document.getElementById('quoteText');
+        const elTagDisplay = document.getElementById('tagDisplay');
+        const elSourceDisplay = document.getElementById('sourceDisplay');
+        const elLoader = document.getElementById('loader');
+        const btnCopy = document.getElementById('btnCopy');
+        const btnFav = document.getElementById('btnFav');
+        const btnInsta = document.getElementById('btnInsta');
+        const toastContainer = document.getElementById('toastContainer');
+        const favList = document.getElementById('favList');
+
+        // Initialize Favorites on load
+        window.onload = () => {
+            renderFavorites();
+        };
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
         async function fetchQuote() {
-            const category = document.getElementById('category').value;
-            const language = document.getElementById('language').value;
-            const part = document.getElementById('part').value;
-            
-            const quoteText = document.getElementById('quoteText');
-            const quoteDisplay = document.getElementById('quoteDisplay');
-            const loader = document.getElementById('loader');
+            // 1. Get raw values
+            let catRaw = document.getElementById('category').value;
+            let langRaw = document.getElementById('language').value;
+            let partRaw = document.getElementById('part').value;
 
-            // Constructs the exact URL requested. 
-            // encodeURIComponent() safely turns spaces into %20
-            const fileName = `${language}_part${part}.json`;
-            const url = `https://raw.githubusercontent.com/KunalTheDev-11/Quotes_Data/main/${encodeURIComponent(category)}/${fileName}`;
+            // 2. Resolve 'random' selections
+            const selCat = catRaw === 'random' ? getRandomItem(CATEGORIES) : catRaw;
+            const selLang = langRaw === 'random' ? getRandomItem(LANGUAGES) : langRaw;
+            let selPart = partRaw === 'random' ? getRandomItem(PARTS) : partRaw;
 
-            // Show loader, hide text
-            quoteDisplay.style.opacity = '0';
-            loader.style.display = 'flex';
+            currentCategory = selCat; // save state for UI
+
+            // 3. UI Pre-fetch states
+            elLoader.style.display = 'flex';
+            elQuoteText.style.opacity = '0';
+            btnCopy.disabled = true;
+            btnFav.disabled = true;
+            btnInsta.disabled = true;
 
             try {
-                const response = await fetch(url);
+                let quotes = await attemptFetch(selCat, selLang, selPart);
                 
-                // If a specific part (like Part 7) doesn't exist in a folder, handle the 404
-                if (!response.ok) {
-                    throw new Error(`File ${fileName} not found in this category.`);
-                }
+                // Select random quote from the array
+                currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
                 
-                const quotes = await response.json();
+                // Update UI
+                elTagDisplay.textContent = selCat.replace(/  /g, ' & ').toUpperCase();
+                elSourceDisplay.textContent = `${selLang.toUpperCase()} | P${selPart}`;
+                elQuoteText.innerHTML = `<span>${currentQuote}</span>`;
                 
-                // Select a random quote from the fetched JSON array
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const randomQuote = quotes[randomIndex];
+                // Enable buttons
+                btnCopy.disabled = false;
+                btnFav.disabled = false;
+                btnInsta.disabled = false;
 
-                // Add quotes and styling formatting
-                quoteText.innerHTML = `"${randomQuote}"`;
-                quoteText.style.color = '#000'; // Ensure text is black on success
-
+                showToast('Wisdom Acquired ⚡', 'success');
             } catch (error) {
-                // Formatting error message
-                quoteText.innerHTML = `<span class="bg-red-500 text-white px-2 uppercase border-2 border-black">Error</span><br/>${error.message}`;
-                console.error("Fetch error:", error);
+                console.error(error);
+                elQuoteText.innerHTML = `<span style="color: var(--accent-pink); font-family: var(--font-display);">ERROR: THE MATRIX REJECTED THE REQUEST.<br><br><span style="font-size:1rem; color: #000;">${error.message}</span></span>`;
+                elTagDisplay.textContent = "SYSTEM FAILURE";
+                showToast('Data missing. Try a lower Part number.', 'error');
             } finally {
-                // Small delay to ensure the brutalist loader animation is seen briefly
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    quoteDisplay.style.transition = 'opacity 0.3s ease-in';
-                    quoteDisplay.style.opacity = '1';
-                }, 400); 
+                elLoader.style.display = 'none';
+                elQuoteText.style.transition = 'opacity 0.3s ease';
+                elQuoteText.style.opacity = '1';
             }
         }
-    </script>
 
+        // Helper to attempt fetch with fallback logic
+        async function attemptFetch(cat, lang, part) {
+            const fileName = `${lang}_part${part}.json`;
+            const url = `https://raw.githubusercontent.com/KunalTheDev-11/Quotes_Data/main/${encodeURIComponent(cat)}/${fileName}`;
+            
+            let response = await fetch(url);
+            
+            if (response.ok) {
+                return await response.json();
+            } else {
+                // FALLBACK LOGIC: If a specific part fails (like 7), auto-fallback to part 1.
+                console.warn(`Part ${part} not found. Falling back to Part 1.`);
+                if (part !== "1") {
+                    const fallbackUrl = `https://raw.githubusercontent.com/KunalTheDev-11/Quotes_Data/main/${encodeURIComponent(cat)}/${lang}_part1.json`;
+                    let fallbackRes = await fetch(fallbackUrl);
+                    if (fallbackRes.ok) {
+                        showToast(`Part ${part} missing. Loaded Part 1 instead.`, 'info');
+                        return await fallbackRes.json();
+                    }
+                }
+                throw new Error("File not found in repository structure.");
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            // Icon based on type
+            let icon = '';
+            if(type === 'success') icon = '✅';
+            if(type === 'error') icon = '❌';
+            if(type === 'info') icon = 'ℹ️';
+
+            toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+            toastContainer.appendChild(toast);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function copyQuote() {
+            if (!currentQuote) return;
+            navigator.clipboard.writeText(currentQuote).then(() => {
+                showToast('Quote copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy text', 'error');
+            });
+        }
+
+        // Favorites Logic
+        function getFavorites() {
+            const favs = localStorage.getItem('brutalQuotes');
+            return favs ? JSON.parse(favs) : [];
+        }
+
+        function saveFavorite() {
+            if (!currentQuote) return;
+            const favs = getFavorites();
+            
+            // Avoid duplicates
+            if (favs.some(f => f.text === currentQuote)) {
+                showToast('Already in favorites!', 'info');
+                return;
+            }
+
+            favs.push({ text: currentQuote, category: currentCategory });
+            localStorage.setItem('brutalQuotes', JSON.stringify(favs));
+            showToast('Saved to Favorites!', 'success');
+            renderFavorites();
+        }
+
+        function deleteFavorite(index) {
+            const favs = getFavorites();
+            favs.splice(index, 1);
+            localStorage.setItem('brutalQuotes', JSON.stringify(favs));
+            renderFavorites();
+        }
+
+        function renderFavorites() {
+            const favs = getFavorites();
+            favList.innerHTML = '';
+            
+            if (favs.length === 0) {
+                favList.innerHTML = '<div style="opacity: 0.5; text-align:center; font-family:var(--font-display); margin-top: 2rem;">NO SAVED QUOTES YET.</div>';
+                return;
+            }
+
+            favs.forEach((fav, index) => {
+                const card = document.createElement('div');
+                card.className = 'fav-card';
+                card.innerHTML = `
+                    <div style="font-family: var(--font-display); font-size: 0.8rem; background: #000; color: #fff; display: inline-block; padding: 2px 5px; margin-bottom: 10px;">
+                        ${fav.category.replace(/  /g, ' & ').toUpperCase()}
+                    </div>
+                    <div>"${fav.text}"</div>
+                    <div class="fav-delete" onclick="deleteFavorite(${index})">X</div>
+                `;
+                favList.appendChild(card);
+            });
+        }
+
+        function toggleFavorites() {
+            const panel = document.getElementById('favPanel');
+            const overlay = document.getElementById('favOverlay');
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                overlay.style.display = 'none';
+            } else {
+                panel.classList.add('open');
+                overlay.style.display = 'block';
+            }
+        }
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for(let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = context.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, currentY);
+            return currentY + lineHeight; // return height used
+        }
+
+        function generateInstagramPost() {
+            if (!currentQuote) return;
+            
+            showToast('Generating Image...', 'info');
+
+            const canvas = document.getElementById('igCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Wait a tiny bit to let toast render, as canvas operations block thread
+            setTimeout(() => {
+                // 1. Background
+                ctx.fillStyle = '#FFD800'; // Brutalist Yellow
+                ctx.fillRect(0, 0, width, height);
+
+                // 2. Retro Dot Grid Pattern (simulated)
+                ctx.fillStyle = '#000000';
+                for(let i=0; i<width; i+=40) {
+                    for(let j=0; j<height; j+=40) {
+                        ctx.beginPath();
+                        ctx.arc(i, j, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // 3. Inner White Brutalist Card
+                const margin = 80;
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(margin, margin, width - (margin*2), height - (margin*2));
+                
+                // Card Border & Shadow (Brutalist style)
+                ctx.lineWidth = 15;
+                ctx.strokeStyle = '#000000';
+                ctx.strokeRect(margin, margin, width - (margin*2), height - (margin*2));
+                
+                // Add fake shadow block
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(width - margin + 15, margin + 25, 25, height - (margin*2)); // Right shadow
+                ctx.fillRect(margin + 25, height - margin + 15, width - (margin*2) + 15, 25); // Bottom shadow
+
+                // 4. Header Bar inside Card
+                ctx.fillStyle = '#FF499E'; // Pink header
+                ctx.fillRect(margin + 7.5, margin + 7.5, width - (margin*2) - 15, 80);
+                ctx.strokeRect(margin + 7.5, margin + 7.5, width - (margin*2) - 15, 80);
+                
+                // Header Text
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = '800 40px "Bricolage Grotesque", sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                const tag = currentCategory ? currentCategory.replace(/  /g, ' & ').toUpperCase() : 'MATRIX.API';
+                ctx.fillText(tag, margin + 40, margin + 47.5);
+
+                // 5. Quote Text Setup
+                ctx.fillStyle = '#000000';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                
+                // Dynamic Font Scaling Logic based on quote length
+                let fontSize = 60;
+                let lineHeight = fontSize * 1.4;
+                if (currentQuote.length > 200) { fontSize = 45; lineHeight = fontSize * 1.4; }
+                if (currentQuote.length > 350) { fontSize = 35; lineHeight = fontSize * 1.4; }
+                
+                ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
+                
+                // 6. Draw Giant Quote Mark background
+                ctx.fillStyle = 'rgba(0,0,0,0.08)';
+                ctx.font = '800 400px "Bricolage Grotesque", sans-serif';
+                ctx.fillText('"', margin + 40, margin + 120);
+
+                // 7. Write the wrapped text
+                ctx.fillStyle = '#000000';
+                ctx.font = `700 ${fontSize}px "JetBrains Mono", monospace`;
+                const textMargin = margin + 60;
+                const maxTextWidth = width - (margin*2) - 120;
+                
+                // Center text vertically roughly
+                // First simulate to get total height
+                let testY = 0;
+                const words = currentQuote.split(' ');
+                let line = '';
+                for(let n = 0; n < words.length; n++) {
+                    let testLine = line + words[n] + ' ';
+                    let metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxTextWidth && n > 0) { testY += lineHeight; line = words[n] + ' '; } 
+                    else { line = testLine; }
+                }
+                testY += lineHeight;
+                
+                // Calculate starting Y to center vertically in the remaining space
+                const spaceHeight = height - margin - 80 - margin; // total height - top header - bottom margin
+                let startY = margin + 80 + (spaceHeight - testY) / 2;
+                
+                wrapText(ctx, currentQuote, textMargin, startY, maxTextWidth, lineHeight);
+
+                // 8. Footer/Watermark
+                ctx.fillStyle = '#000000';
+                ctx.font = '800 30px "Bricolage Grotesque", sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText('GENERATED BY MATRIX.API', width - margin - 40, height - margin - 40);
+
+                // 9. Export & Download
+                const dataURL = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'quote_matrix.png';
+                link.href = dataURL;
+                link.click();
+                
+                showToast('Image Downloaded! 📸', 'success');
+
+            }, 100);
+        }
+    </script>
 </body>
 </html>
